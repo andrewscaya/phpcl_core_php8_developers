@@ -1,5 +1,6 @@
 FROM asclinux/linuxforphp-8.2-ultimate:7.1-nts
 MAINTAINER doug.bierer@etista.com
+COPY . /srv/tempo/repo
 RUN \
 	echo "Compiling PHP 8 ..." && \
 	cp /bin/lfphp-compile /bin/lfphp-compile-php8 && \
@@ -9,12 +10,8 @@ RUN \
 	ln -sfv /usr/bin/php /usr/bin/php7 && \
 	ln -sfv /usr/local/bin/php /usr/bin/php8
 RUN \
-    git clone "%%FORK%%" /srv/tempo/repo && \
     cd /srv/tempo/repo && \
-    git checkout master && \
-    git config user.email "%%GITHUB_EMAIL%%" && \
-    git config user.name  "%%GITHUB_NAME%%" && \
-    git config core.fileMode false
+    git checkout master
 RUN \
 	echo "Configuring SQLite and sample database ..." && \
     echo "TODO: install SQLite PHP ext ..." && \
